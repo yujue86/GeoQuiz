@@ -2,6 +2,7 @@ package com.example.mengxl.geoquiz;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,12 +11,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.util.Log.*;
+
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
     private TextView mQuestionTextView;
+
+    private static final String TAG = "QuizActivity";
 
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
             new TrueFalse(R.string.first_question, true),
@@ -47,6 +52,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called");
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
@@ -85,7 +91,36 @@ public class QuizActivity extends AppCompatActivity {
 
         updateQuestion();
 
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        d(TAG, "onPause() called");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        d(TAG, "onStop() called");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        d(TAG, "onDestroy() called");
     }
 
     @Override
