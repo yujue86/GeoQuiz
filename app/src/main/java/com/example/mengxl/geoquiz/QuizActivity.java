@@ -24,9 +24,9 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index";
 
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
-            new TrueFalse(R.string.first_question, true),
-            new TrueFalse(R.string.second_question, false),
-            new TrueFalse(R.string.third_question, true),
+            new TrueFalse(R.string.first_question, false),
+            new TrueFalse(R.string.second_question, true),
+            new TrueFalse(R.string.third_question, false),
     };
 
     private int mCurrentIndex = 0;
