@@ -4,13 +4,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 
 public class CheatActivity extends AppCompatActivity {
+
+    private Button mShowAnswer;
+    private TextView mAnswerTextView;
+
+    private boolean mAnswerIs;
+
+    public static final String EXTRA_ANSWER_IS = "mengxl.answer_is";
+    public static final String EXTRA_IS_CHEATER = "mengxl.is_cheater";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
+
+        mAnswerIs = getIntent().getBooleanExtra(EXTRA_ANSWER_IS,false);
+
+        mAnswerTextView = (TextView) findViewById(R.id.show_answer_textview);
+
+        mShowAnswer = (Button)findViewById(R.id.show_answer_button);
+        mShowAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mAnswerIs)
+                    mAnswerTextView.setText(R.string.true_button);
+                else
+                    mAnswerTextView.setText(R.string.false_button);
+            }
+        });
+
     }
 
     @Override
