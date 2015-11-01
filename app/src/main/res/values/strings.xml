@@ -12,6 +12,7 @@
     <string name="second_question">are you pig?</string>
     <string name="third_question">i am pig!</string>
     <string name="cheat_textview">are you sure to do this?</string>
+    <string name="answer_is_shown">cheat is wrong!</string>
     <string name="cheat_button">CHEAT</string>
     <string name="show_answer_button">Show Answer</string>
     <string name="title_activity_cheat">CheatActivity</string>

@@ -22,6 +22,8 @@ public class QuizActivity extends AppCompatActivity {
     private Button mNextButton;
     private TextView mQuestionTextView;
 
+    private boolean mIsCheater;
+
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
 
@@ -43,12 +45,15 @@ public class QuizActivity extends AppCompatActivity {
 
         int messageResId = 0;
 
-        if(userPressedTrue == answerIsTrue){
-            messageResId = R.string.correct_toast;
-        }else{
-            messageResId = R.string.incorrect_toast;
+        if(mIsCheater){
+            messageResId = R.string.answer_is_shown;
+        }else {
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
-
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
@@ -90,7 +95,7 @@ public class QuizActivity extends AppCompatActivity {
                 Intent i = new Intent(QuizActivity.this, CheatActivity.class);
                 boolean mAnswerIs = mQuestionBank[mCurrentIndex].ismTrueQuestion();
                 i.putExtra(CheatActivity.EXTRA_ANSWER_IS,mAnswerIs);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
 
@@ -114,8 +119,16 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG,"onSavedInstanceState");
+        Log.i(TAG, "onSavedInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
+    protected void onActivityResult(int requstCode, int resultcode, Intent data){
+        if(data == null){
+            return;
+        }
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEATER, false);
     }
 
     @Override
@@ -148,25 +161,4 @@ public class QuizActivity extends AppCompatActivity {
         d(TAG, "onDestroy() called");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_quiz, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
