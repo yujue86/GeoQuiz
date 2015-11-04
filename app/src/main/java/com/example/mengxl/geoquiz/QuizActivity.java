@@ -22,15 +22,20 @@ public class QuizActivity extends AppCompatActivity {
     private Button mNextButton;
     private TextView mQuestionTextView;
 
-    private boolean mIsCheater;
+    //private boolean mIsCheater;
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String KEY_ISCHEATER = "ischeater";
 
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
             new TrueFalse(R.string.first_question, false),
             new TrueFalse(R.string.second_question, true),
             new TrueFalse(R.string.third_question, false),
+    };
+
+    private boolean[] mIsCheater = new boolean[]{
+            false,false,false,
     };
 
     private int mCurrentIndex = 0;
@@ -45,7 +50,7 @@ public class QuizActivity extends AppCompatActivity {
 
         int messageResId = 0;
 
-        if(mIsCheater){
+        if(mIsCheater[mCurrentIndex]){
             messageResId = R.string.answer_is_shown;
         }else {
             if (userPressedTrue == answerIsTrue) {
@@ -110,6 +115,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if(savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater = savedInstanceState.getBooleanArray(KEY_ISCHEATER);
         }
 
         updateQuestion();
@@ -121,6 +127,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSavedInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBooleanArray(KEY_ISCHEATER, mIsCheater);
     }
 
     @Override
@@ -128,7 +135,10 @@ public class QuizActivity extends AppCompatActivity {
         if(data == null){
             return;
         }
-        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEATER, false);
+        boolean isCheater = data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEATER, false);
+        if(isCheater) {
+            mIsCheater[mCurrentIndex] = isCheater;
+        }
     }
 
     @Override

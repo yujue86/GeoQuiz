@@ -30,6 +30,7 @@ public class CheatActivity extends AppCompatActivity {
     }
 
     private void setAnswerShownResult(boolean isAnswerShown){
+        mIsCheater = isAnswerShown;
         Intent data = new Intent();
         data.putExtra(EXTRA_IS_CHEATER,isAnswerShown);
         setResult(RESULT_OK, data);
@@ -56,9 +57,10 @@ public class CheatActivity extends AppCompatActivity {
 
         if(savedInstanceState != null){
             boolean isCheater = savedInstanceState.getBoolean(KEY_ISCHEATER);
-            setAnswerShown();
-            if(isCheater)
+            if(isCheater) {
+                setAnswerShown();
                 setAnswerShownResult(true);
+            }
         }
     }
 
